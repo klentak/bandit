@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="css/game.css" type="text/css">{% endblock %}
+{% block body %}
+{{ include('game/inc/navbar.html.twig') }}
+
+<div class="example-wrapper">
+<div class="container">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if number1 %}
+        <div class="number_l">{{ number1 }}</div>
+        <div class="number_l">{{ number2 }}</div>
+        <div class="number_l">{{ number3 }}</div>
+    {% endif %}
+</div>
+{% endblock %}
