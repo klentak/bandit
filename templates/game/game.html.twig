@@ -7,14 +7,30 @@
 
 <div class="example-wrapper">
 <div class="container">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+
 
     {% if number1 %}
-        <div class="number_l">{{ number1 }}</div>
-        <div class="number_l">{{ number2 }}</div>
-        <div class="number_l">{{ number3 }}</div>
+
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+             style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">{{ number1 }}</div>
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+        style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">{{ number2 }}</div>
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+        style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">{{ number3 }}</div>
+
+    {% else %}
+
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+        style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">$</div>
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+        style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">$</div>
+        <div class="btn btn-warning disabled mt-5 btn-lg"
+        style="width: 100px; height: 100px; font-size: 80px; padding-top: 40px;">$</div>
+
     {% endif %}
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
 </div>
 {% endblock %}

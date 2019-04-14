@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
-        {% block stylesheets %}{% endblock %}
+        <style>{% block stylesheets %}{% endblock %}</style>
     </head>
     <body>
         {% block body %}{% endblock %}

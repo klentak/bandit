@@ -41,6 +41,7 @@ class GameController extends AbstractController
                 'number1'   => $number1,
                 'number2'   => $number2,
                 'number3'   => $number3,
+
                 ));
 
         }
