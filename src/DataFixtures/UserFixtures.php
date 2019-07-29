@@ -26,6 +26,8 @@ class UserFixtures extends Fixture
         $user,
         'admin'
     ));
+    $user->setScore(1000);
+    $user->setRoles(['ROLE_SUPER_ADMIN']);
 
         $manager->persist($user);
         $manager->flush();

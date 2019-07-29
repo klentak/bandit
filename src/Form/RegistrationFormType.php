@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\User;
 
+use function PHPSTORM_META\type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,8 +26,30 @@ class RegistrationFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => array(
-                    'class' => 'form-control mt-3',
+                    'class' => 'form-control mt-4',
                     'placeholder' => 'Login',
+                    ),
+                ])
+            ->add('name', TextType::class, [
+                'label' => false,
+                'attr' => array(
+                    'class' => 'form-control mt-4',
+                    'placeholder' => 'Name',
+                    ),
+                ])
+            ->add('surname', TextType::class, [
+                'label' => false,
+                'attr' => array(
+                    'class' => 'form-control mt-4',
+                    'placeholder' => 'Surname',
+                    ),
+                ])
+            ->add('email', TextType::class, [
+                'label' => false,
+                'attr' => array(
+                    'class' => 'form-control mt-4',
+                    'placeholder' => 'Email',
+                    'type' => EmailType::class
                     ),
                 ])
             ->add('plainPassword', RepeatedType::class, [
@@ -36,14 +60,14 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => [
                     'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control mt-3',
+                    'attr' => [
+                        'class' => 'form-control mt-4',
                         'placeholder' => 'Hasło',
-                    )],
+                    ]],
                 'second_options' => [
                     'label' => false,
                     'attr' => array(
-                        'class' => 'form-control mt-3',
+                        'class' => 'form-control mt-4',
                         'placeholder' => 'Powtórz hasło',
                     )],
                 'constraints' => [

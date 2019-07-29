@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -17,38 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class GameController extends AbstractController
 {
     /**
-     * @Route("/game", name="game")
+     * @Route("/game", name="game", options={"expose"=true})
      */
     public function game(Request $request)
     {
+        return $this->render('game/game.html.twig');
+    }
 
-        $form = $this->createFormBuilder()
-            ->add('raffle', SubmitType::class, array(
-                'label' => 'losuj',
-                'attr' => array('class' => 'btn btn-primary mt-3')))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted())
-        {
-            $number1 = random_int(0, 9);
-            $number2 = random_int(0, 9);
-            $number3 = random_int(0, 9);
-
-            return $this->render('game/game.html.twig', array(
-                'form'      => $form->createView(),
-                'number1'   => $number1,
-                'number2'   => $number2,
-                'number3'   => $number3,
-
-                ));
-
-        }
-
-        return $this->render('game/game.html.twig', array(
-            'form' => $form->createView(),
-            'number1'   => 0
-        ));
+    /**
+     * @Route("game/UserEdit", name="__UserEdit")
+     */
+    public function Edit(Request $request)
+    {
+        return $this->render('game/edit.html.twig');
     }
 }

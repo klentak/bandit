@@ -25,15 +25,35 @@ class User implements UserInterface
     private $username;
 
     /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $surname;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
-    private $password;
+    private $score;
 
     public function getId(): ?int
     {
@@ -62,16 +82,17 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        if (in_array('ROLE_USER', $roles) === false)
+        {
+            $roles[] = 'ROLE_USER';
+        }
 
         return $this;
     }
@@ -90,6 +111,56 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore($score)
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getname()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+
 
     /**
      * @see UserInterface

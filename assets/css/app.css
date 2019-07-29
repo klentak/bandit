@@ -1,0 +1,23 @@
+body {
+    background-color: lightgray;
+}
+
+.invisible
+{
+    visibility: hidden;
+}
+
+.box_edit{
+    background-color: red;
+    width: 80%;
+    height: 100px;
+    margin-left: 1%;
+}
+
+.box_edit:first-child{
+    margin-left: 0;
+}
+
+body{
+    background-color: #8959A8;
+}

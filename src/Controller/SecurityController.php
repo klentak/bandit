@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
@@ -18,10 +20,12 @@ class SecurityController extends Controller
      */
     public function login(Request $request, AuthenticationUtils $utils)
     {
-
+        if ($this->isGranted("ROLE_USER"))
+        {
+            return $this->redirectToRoute('game');
+        }
 
         $error = $utils->getLastAuthenticationError();
-
         $lastUsername = $utils->getLastUsername();
 
 
@@ -31,6 +35,8 @@ class SecurityController extends Controller
         ]);
 
     }
+
+
 
 
     /**
