@@ -18,12 +18,47 @@
             </div>
             <div class="col-lg-9 box_edit">
                 <div class="alert alert-dismissible alert-light">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="{{ app.user.username }}">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h6>User credits:</h6>
+                            <h4>{{ app.user.score }}</h4>
+                        </div>
+                        <div class="col-lg-3">
+                            <h6>Games played</h6>
+                            <h4>{{ app.user.score }}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+                    <h3>Game history</h3>
+                    <table class="table table-hover" style="width: 100%;">
+                        <tr class="table-dark">
+                            <th>Numbers</th>
+                            <th>Result</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                            <th>Reward</th>
+                        </tr>
+                        {% for history in history %}
+
+                        <tr
+                        class="table-{% if history.result == true %}primary{% else %}secondary{% endif %}">
+                            <td>{{ history.numbers.0 }} - {{ history.numbers.1 }} - {{ history.numbers.2 }}</td>
+                            <td>
+                                {% if history.result == true %}
+                                    win
+                                {% else %}
+                                    lose
+                                {% endif %}
+                            </td>
+                            <td>{{ history.score }}</td>
+                            <td>{{ history.date|date("m/d/Y H:m:s") }}</td>
+                            <td>{{ history.reward }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
     </div>
 
 {% block javascript %}<script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>{% endblock %}

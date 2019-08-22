@@ -12,7 +12,7 @@
                 <a class="nav-link text-danger" href="{{ path('logout') }}">Wyloguj</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-info" href="{{ path('__UserEdit') }}">Zalogowano jako {{ app.user.id }}</a>
+                <a class="nav-link text-info" href="{{ path('__UserEdit') }}"> {{ app.user.username }}</a>
             </li>
             {%  if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">

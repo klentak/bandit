@@ -1,52 +1,63 @@
 {% extends 'base.html.twig' %}
 {% block title %}Game{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" href="css/game.css" type="text/css">{% endblock %}
+{% block stylesheets %}
+        {{ encore_entry_link_tags('game') }}
+        <link href="build/game.css" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block body %}
+<style>
+        .number{
+
+         width: 330px;
+         height: 330px;
+         font-size: 200px;
+         padding-top: 150px;
+
+        }
+
+
+</style>
+
 
 {{ include('game/inc/navbar.html.twig') }}
+
 
 <div class="container" style="max-width: 1062px">
 <div class="bs-docs-section">
         <div class="row">
-
-
                 <div class="col-lg-4">
                         <div class="bs-component">
-                                <div class="btn btn-warning disabled mt-5 btn-lg number" style="width: 330px; height: 330px; font-size: 200px; padding-top: 150px;">$</div>
+                                <div id="slot1" class="btn btn-warning disabled mt-5 btn-lg number">$</div>
                         </div>
                 </div>
 
                 <div class="col-lg-4">
                         <div class="bs-component">
-                                <div class="btn btn-warning disabled mt-5 btn-lg number" style="width: 330px; height: 330px; font-size: 200px; padding-top: 150px;">$</div>
+                                <div id="slot2" class="btn btn-warning disabled mt-5 btn-lg number">$</div>
                         </div>
                 </div>
 
                 <div class="col-lg-4">
                         <div class="bs-component">
-                                <div class="btn btn-warning disabled mt-5 btn-lg number" style="width: 330px; height: 330px; font-size: 200px; padding-top: 150px;">$</div>
+                                <div id="slot3" class="btn btn-warning disabled mt-5 btn-lg number">$</div>
                         </div>
                 </div>
         </div>
 
         <div class="row mt-5">
                 <div style="margin-left: 47%">
-                        <button id="btn" class='btn btn-primary mt-6'>console</button>
+                        <button id="btn" class='btn btn-primary mt-6 btn-lg'>spin</button>
                 </div>
         </div>
 
-        <div class="card text-white bg-danger mb-3 mt-5" style="max-width: 20rem;">
-                <div class="card-header" id="result">Header</div>
-                <div class="card-body">
-                        <h4 class="card-title">Danger card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-        </div>
 
 </div>
 </div>
-{% block javascript %}
-{{ encore_entry_script_tags('app') }}
-<script src="build/js/app.js"></script>
+
+
+{{ include('game/inc/gameBar.html.twig') }}
+
+{% block javascripts %}
+        {{ encore_entry_script_tags('game') }}
 {% endblock %}
 {% endblock %}
