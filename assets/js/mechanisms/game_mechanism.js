@@ -4,8 +4,7 @@ var $ = require('jquery');
 $(document).ready(function () {
 var slot_machine = {
 
-
-
+    bid: $('#bid').val(),
 
     generate: function(){
         this.number1= Math.floor(Math.random() * 10);
@@ -28,23 +27,12 @@ var slot_machine = {
     },
 
 
-    raffle: function() {
+    history: function() {
 
-        var history = {};
-
-        var bid = $('#bid').val();
-
-        setInterval(function () {
-            $('#slot1').html(number());
-        }, 50);
-
-
-
-
-        history = {
-            numbers: [numbers[0], numbers[1], numbers[2]],
-            result: win,
-            bid: bid
+        var history = {
+            numbers: [this.number1, this.number2, this.number3,],
+            result: this.win,
+            bid: this.bid,
         };
         console.log(history);
 
@@ -53,15 +41,12 @@ var slot_machine = {
             url: 'game/save_result',
             dataType: "json",
             data: history
-        })
-            .done(response => {
-                console.log(response);
-            });
+        });
 
         score();
     },
 
-    score: function() {
+    end: function() {
         var score;
 
         $.ajax({
@@ -87,10 +72,29 @@ $('#btn').click(function () {
             dataType: "json",
             success: function (score) {
                 if (score['score'] > $('#bid').val()) {
+                    $.ajax({
+                        method: "post",
+                        url: 'game/save_result',
+                        dataType: "json",
+                        data: {
+                            numbers: [slot_machine.number1, slot_machine.number2, slot_machine.number3,],
+                            result: slot_machine.win,
+                            bid: slot_machine.bid,
+                        },
+                        success: function() {
+                            $.ajax({
+                                method: "post",
+                                url: 'game/get_score',
+                                dataType: "json",
+                                success: function (score) {
+                                    setTimeout(clearInterval(raffle), 1000);
+                                    slot_machine.win_numbers();
+                                    $('#score').html('$ ' + score['score']);
+                                },
+                            });
 
-
-                    setTimeout(clearInterval(raffle), 1000);
-                    setTimeout(slot_machine.win_numbers(),1000);
+                        },
+                        });
                 } else {
                     alert("Nie masz wystarczającej ilości punktów!");
                 }
