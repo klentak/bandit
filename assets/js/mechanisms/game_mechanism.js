@@ -4,12 +4,18 @@ var $ = require('jquery');
 $(document).ready(function () {
 var slot_machine = {
 
-    bid: $('#bid').val(),
+    bid: function(){
+        return $('#bid').val();
+    },
 
     generate: function(){
         this.number1= Math.floor(Math.random() * 10);
         this.number2= Math.floor(Math.random() * 10);
         this.number3= Math.floor(Math.random() * 10);
+
+        // this.number1= 1;
+        // this.number2= 1;
+        // this.number3= 1;
 
         this.win = (this.number1 === this.number2 && this.number1 === this.number3);
     },
@@ -26,52 +32,47 @@ var slot_machine = {
         $('#slot3').html(this.number3);
     },
 
-
-    history: function() {
-
-        var history = {
-            numbers: [this.number1, this.number2, this.number3,],
-            result: this.win,
-            bid: this.bid,
-        };
-        console.log(history);
-
-        $.ajax({
-            method: "post",
-            url: 'game/save_result',
-            dataType: "json",
-            data: history
-        });
-
-        score();
+    view_result: function(){
+        if(this.win){
+            $('#result').html(this.bid()*100);
+            $('#gameBar').css( "background-color", "red");
+            $('#gameBar').css( "color", "#C4C4C4");
+            $('#gameBar').removeClass("bg-light");
+            $('#result').removeClass("text-danger");
+            $('#result').css( "color", "white");
+        }else{
+            // $('#result').html("");
+            $('#result').html(":(");
+        }
     },
 
-    end: function() {
-        var score;
+    default: function () {
+        $('#slot1').html("$");
+        $('#slot2').html("$");
+        $('#slot3').html("$");
+    },
 
-        $.ajax({
-            method: "post",
-            url: 'game/get_score',
-            dataType: "json",
-            success: function (score) {
-                $('#score').html('$ ' + score['score']);
-            },
-        });
+    reset: function () {
+        $('#btn').attr("disabled", true);
+        $('#result').html("");
+        $('#gameBar').css( "background-color", "");
+        $('#gameBar').css( "color", "");
+        $('#gameBar').addClass("bg-light");
+        $('#result').addClass("text-danger");
+        $('#result').css( "color", "1");
     }
-
-
-
 };
 
 $('#btn').click(function () {
+    slot_machine.reset();
     slot_machine.generate();
-    var raffle = setInterval(slot_machine.random_numbers, 50);
+    var raffle = setInterval(slot_machine.random_numbers, 150);
         $.ajax({
             method: "post",
             url: 'game/get_score',
             dataType: "json",
             success: function (score) {
-                if (score['score'] > $('#bid').val()) {
+                if (score['score'] >= $('#bid').val()) {
                     $.ajax({
                         method: "post",
                         url: 'game/save_result',
@@ -87,18 +88,29 @@ $('#btn').click(function () {
                                 url: 'game/get_score',
                                 dataType: "json",
                                 success: function (score) {
-                                    setTimeout(clearInterval(raffle), 1000);
+                                    $.wait( function(){
+                                    clearInterval(raffle);
                                     slot_machine.win_numbers();
+                                    slot_machine.view_result();
                                     $('#score').html('$ ' + score['score']);
-                                },
+                                    $('#btn').attr("disabled", false);
+                                    }, 2);
+                                }
                             });
-
-                        },
-                        });
+                        }
+                    });
                 } else {
+                    clearInterval(raffle);
+                    slot_machine.default();
+                    console.log('cls');
                     alert("Nie masz wystarczającej ilości punktów!");
+                    $('#btn').attr("disabled", false);
                 }
             },
         });
     });
 });
+
+$.wait = function( callback, seconds){
+    return window.setTimeout( callback, seconds * 1000 );
+};
