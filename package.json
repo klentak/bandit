@@ -395,7 +395,7 @@
     "node-releases": "^1.1.15",
     "nopt": "^4.0.1",
     "normalize-path": "^3.0.0",
-    "normalize-url": "^3.3.0",
+    "normalize-url": "^4.5.1",
     "npm-bundled": "^1.0.6",
     "npm-packlist": "^1.4.1",
     "npm-run-path": "^2.0.2",
